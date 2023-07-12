@@ -29,10 +29,9 @@ class CreateBotTool(BaseTool):
                 },
             )
             data = response.json()
-            if (data.staus) {
+            if data.status == True:
                 return f"Bot {name} created successfully with ID: {data.bot_id}"
-            } else {
+            else:
                 raise Exception(data.error)
-            }
         except Exception as err:
             return f"Error: Unable to create a bot {err}"
