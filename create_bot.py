@@ -14,7 +14,7 @@ class CreateBotTool(BaseTool):
     args_schema: Type[BaseModel] = CreateBotSchema
     description: str = "Create a bot in Brain system"
 
-    def _execute(self, name: str) -> str:
+    def _execute(self, bot_name: str) -> str:
         try:
             access_token = self.get_tool_config("ACCESS_TOKEN")
             response = requests.post(
@@ -25,12 +25,12 @@ class CreateBotTool(BaseTool):
                     "X-Access-Token": access_token
                 },
                 json = {
-                    "name": name,
+                    "name": bot_name,
                 },
             )
             data = response.json()
             if data.status == True:
-                return f"Bot {name} created successfully with ID: {data.bot_id}"
+                return f"Bot '{bot_name}' created successfully with ID: {data.bot_id}"
             else:
                 raise Exception(data.error)
         except Exception as err:
