@@ -30,7 +30,8 @@ class CreateBotTool(BaseTool):
             )
             data = response.json()
             if data["status"] == True:
-                return f"Bot '{bot_name}' created successfully with ID: {data["bot_id"]}"
+                bot_id = data["bot_id"]
+                return f"Bot '{bot_name}' created successfully with ID: {bot_id}"
             else:
                 raise Exception(data["error"])
         except Exception as err:
