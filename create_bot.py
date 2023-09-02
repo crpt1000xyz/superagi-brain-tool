@@ -1,6 +1,6 @@
 from typing import Type
 from pydantic import BaseModel, Field
-from tool import BrainTool
+from brain_tool import BrainTool
 
 class CreateBotSchema(BaseModel):
     bot_name: str = Field(..., description="Bot name")

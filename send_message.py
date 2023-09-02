@@ -1,6 +1,6 @@
 from typing import Type
 from pydantic import BaseModel, Field
-from tool import BrainTool
+from brain_tool import BrainTool
 
 class SendMessageSchema(BaseModel):
     user_id: str = Field(..., description="ID of the user to send message to")
