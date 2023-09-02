@@ -1,34 +1,18 @@
 from typing import Type
 from pydantic import BaseModel, Field
-from superagi.tools.base_tool import BaseTool
-import requests
+from tool import BrainTool
 
 class CreateBotSchema(BaseModel):
-    bot_name: str = Field(
-        ...,
-        description="Bot name",
-    )
+    bot_name: str = Field(..., description="Bot name")
 
-class CreateBotTool(BaseTool):
+class CreateBotTool(BrainTool):
     name: str = "Brain Create Bot"
     args_schema: Type[BaseModel] = CreateBotSchema
     description: str = "Create a bot in Brain system"
 
     def _execute(self, bot_name: str) -> str:
         try:
-            access_token = self.get_tool_config("ACCESS_TOKEN")
-            response = requests.post(
-                f"https://api.brn.ai/bot",
-                headers = {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                    "X-Access-Token": access_token
-                },
-                json = {
-                    "name": bot_name,
-                },
-            )
-            data = response.json()
+            data = self.post("/bot", { "name": bot_name })
             if data["status"] == True:
                 bot_id = data["bot_id"]
                 return f"Bot '{bot_name}' created successfully with ID: {bot_id}"
