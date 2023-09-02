@@ -16,7 +16,7 @@ class SendAttachmentTool(BrainTool):
         try:
             data = self.post(
                 f"/message/send/{user_id}",
-                { "type": "attachment", "content": { "type": attachment_type, "url": url } },
+                { "type": attachment_type, "content": { "url": url } },
             )
             if data["status"] == True:
                 return "Attachment sent successfully"
